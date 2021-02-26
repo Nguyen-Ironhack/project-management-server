@@ -8,6 +8,7 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const cors = require('cors');
 
 
 // WHEN INTRODUCING USERS DO THIS:
@@ -66,7 +67,12 @@ app.locals.title = 'Express - Generated with IronGenerator';
 
 
 // ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
-
+app.use(
+  cors({
+    credentials: true,
+    origin: ['http://localhost:3000'] // <== this will be the URL of our React app (it will be running on port 3000)
+  })
+);
 
 
 // ROUTES MIDDLEWARE STARTS HERE:
@@ -74,7 +80,7 @@ app.locals.title = 'Express - Generated with IronGenerator';
 const index = require('./routes/index');
 app.use('/', index);
 app.use('/api', require('./routes/project-routes'));
-// app.use('/api', require('./routes/task-routes'));
+app.use('/api', require('./routes/task-routes'));
 
 
 module.exports = app;
